@@ -11,7 +11,7 @@ URLS_TO_SCRAPE = [
     "https://www.agriculture.bf/2025/09/11/%f0%9d%90%8f%f0%9d%90%9a%f0%9d%90%a7%f0%9d%90%a2%f0%9d%90%9e%f0%9d%90%ab-%f0%9d%90%9d%f0%9d%90%9e-%f0%9d%90%91%f0%9d%90%9e%f0%9d%90%ac%f0%9d%90%a2%f0%9d%90%a5%f0%9d%90%a2%f0%9d%90%9e%f0%9d%90%a7/",
     "https://www.agriculture.bf/2025/09/08/%f0%9d%90%82%f0%9d%90%a8%f0%9d%90%a8%f0%9d%90%a9%f0%9d%90%9e%f0%9d%90%ab%f0%9d%90%9a%f0%9d%90%ad%f0%9d%90%a2%f0%9d%90%a8%f0%9d%90%a7-%f0%9d%90%ab%f0%9d%90%ae%f0%9d%90%ac%f0%9d%90%ac%f0%9d%90%a8/"
 ]
-DATA_DIR = "data"
+DATA_DIR = "../data"
 os.makedirs(DATA_DIR, exist_ok=True)  # Crée le dossier data/ s'il n'existe pas
 
 corpus_data = []
@@ -19,31 +19,66 @@ source_list = []
 
 
 def scrape_page(url):
-    """Télécharge une page et extrait le texte principal."""
+    """Télécharge une page et extrait le texte principal de manière robuste."""
     try:
-        # Respect de l'environnement : Utiliser un User-Agent
-        headers = {'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64)'}
+        headers = {
+            'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36'
+        }
         response = requests.get(url, headers=headers, timeout=10)
-        response.raise_for_status()  # Lève une exception pour les codes d'erreur HTTP
+        response.raise_for_status()
 
         soup = BeautifulSoup(response.text, 'html.parser')
 
-        # *** Logique de Nettoyage/Extraction - C'est la partie la plus critique ! ***
-        # Ciblez les balises qui contiennent le corps de l'article (ex: <article>, <main>, <div> avec une classe spécifique)
+        # *** ÉTAPE 1 : Supprimer les éléments indésirables ***
+        for element in soup.find_all(['script', 'style', 'nav', 'header', 'footer',
+                                      'aside', 'iframe', 'noscript']):
+            element.decompose()
 
-        # Exemple simple : on prend tout le texte des balises p (paragraphes)
-        main_content_tags = soup.find_all('p')
+        # *** ÉTAPE 2 : Chercher le contenu principal dans l'ordre de priorité ***
+        main_content = None
 
-        # Joindre le texte des paragraphes
-        page_text = "\n".join([tag.get_text(strip=True) for tag in main_content_tags if tag.get_text(strip=True)])
+        # Essayer les balises sémantiques HTML5
+        main_content = soup.find('article') or soup.find('main')
 
-        if not page_text:
-            print(f"ATTENTION: Aucun contenu trouvé pour {url}. À vérifier.")
+        # Essayer les classes/IDs courants
+        if not main_content:
+            main_content = soup.find(['div', 'section'],
+                                     class_=lambda x: x and any(term in x.lower()
+                                                                for term in
+                                                                ['content', 'article', 'post', 'entry', 'body']))
+
+        # Essayer par ID
+        if not main_content:
+            main_content = soup.find(['div', 'section'],
+                                     id=lambda x: x and any(term in x.lower()
+                                                            for term in ['content', 'article', 'post', 'main']))
+
+        # Fallback : utiliser tout le body
+        if not main_content:
+            main_content = soup.find('body')
+            print(f"AVERTISSEMENT: Utilisation du <body> complet pour {url}")
+
+        # *** ÉTAPE 3 : Extraire le texte ***
+        if main_content:
+            # Extraire paragraphes, titres, listes
+            text_elements = main_content.find_all(['p', 'h1', 'h2', 'h3', 'h4', 'h5', 'h6', 'li'])
+            page_text = "\n".join([elem.get_text(strip=True) for elem in text_elements
+                                   if elem.get_text(strip=True)])
+        else:
+            page_text = ""
+
+        if not page_text or len(page_text) < 100:
+            print(f"⚠️  ATTENTION: Contenu insuffisant pour {url} ({len(page_text)} caractères)")
+            # DEBUG : Afficher la structure HTML
+            print(f"   Structure disponible: {[tag.name for tag in soup.find_all(limit=20)]}")
 
         return page_text
 
     except requests.exceptions.RequestException as e:
-        print(f"Erreur lors de la récupération de {url}: {e}")
+        print(f"❌ Erreur réseau pour {url}: {e}")
+        return None
+    except Exception as e:
+        print(f"❌ Erreur inattendue pour {url}: {e}")
         return None
 
 

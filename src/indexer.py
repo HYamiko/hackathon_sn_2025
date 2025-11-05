@@ -7,7 +7,7 @@ from llama_index.embeddings.huggingface import HuggingFaceEmbedding
 from llama_index.core import Settings
 
 # --- Configuration des chemins et modèles ---
-DATA_DIR = "data"
+DATA_DIR = "../data"
 CORPUS_FILE = os.path.join(DATA_DIR, "corpus.json")
 CHROMA_DB_PATH = "./chroma_db"
 CHROMA_COLLECTION_NAME = "burkina_knowledge_base"

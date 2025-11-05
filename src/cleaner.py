@@ -1,7 +1,7 @@
 import json
 import os
 
-DATA_DIR = "data"
+DATA_DIR = "../data"
 INPUT_FILE = os.path.join(DATA_DIR, "corpus_brut.json")
 OUTPUT_FILE = os.path.join(DATA_DIR, "corpus.json")  # Le livrable final attendu
 
