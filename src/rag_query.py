@@ -9,7 +9,7 @@ from llama_index.embeddings.huggingface import HuggingFaceEmbedding
 # --- Configuration RAG ---
 CHROMA_COLLECTION_NAME = "burkina_knowledge_base"
 EMBED_MODEL = "sentence-transformers/paraphrase-multilingual-mpnet-base-v2"
-LLM_MODEL = "mistral:7b-instruct-v0.2-q4_K_M"
+LLM_MODEL = "mistral"
 REQUEST_TIMEOUT = 360.0  # Augmenté pour la sécurité
 
 
