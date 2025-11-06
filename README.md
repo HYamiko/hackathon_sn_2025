@@ -2,8 +2,16 @@
 
 
 
-
-[Video de presentation](https://www.youtube.com/watch?v=TpCsrKS_Bdw)
+<!DOCTYPE html>
+<html>
+  <body>
+    <h1>Ma vidéo</h1>
+    <video width="600" controls>
+      <source src="video_presentation.mp4" type="video/mp4">
+    </video>
+  </body>
+</html>
+[Video de presentation sur Youtube](https://www.youtube.com/watch?v=TpCsrKS_Bdw)
 ## 🧠 Introduction
 
 Ce projet implémente un **système RAG (Retrieval-Augmented Generation)** :
@@ -138,6 +146,7 @@ python download_pdf_via_url.py ../data/sources.txt inputs/docs
 Exécutez le script d'indexation pour traiter les documents et créer l'index FAISS :
 
 ```bash
+#Vous devez obligatoirement être dans le dossier scr
 python indexer.py
 ```
 
@@ -151,6 +160,7 @@ Ce script va :
 ### 3. Lancer l'application
 
 ```bash
+#Vous devez obligatoirement être dans le dossier scr
 streamlit run MistralChat.py
 ```
 
