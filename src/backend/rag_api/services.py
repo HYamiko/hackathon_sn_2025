@@ -17,7 +17,7 @@ class RAGService:
     _query_engine = None
     _index = None
 
-    QA_PROMPT_TEMPLATE = """Tu es un assistant expert sur le Burkina Faso. Réponds TOUJOURS en français.
+    QA_PROMPT_TEMPLATE = """Tu es un assistant expert sur l'agriculture du Burkina Faso. Réponds TOUJOURS en français.
 
     Contexte fourni :
     {context_str}

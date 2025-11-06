@@ -3,16 +3,14 @@ from bs4 import BeautifulSoup
 import json
 import os
 
-# --- Configuration (À adapter) ---
-# Listez quelques URLs pour commencer, en respectant robots.txt !
-# *Assurez-vous que le contenu est en français et qu'il est bien burkinabè.*
+
 URLS_TO_SCRAPE = [
     "https://www.agriculture.bf/2025/09/24/%f0%9d%90%8c%f0%9d%90%a2%f0%9d%90%ac%f0%9d%90%9e-%f0%9d%90%9e%f0%9d%90%a7-oe%f0%9d%90%ae%f0%9d%90%af%f0%9d%90%ab%f0%9d%90%9e-%f0%9d%90%9d%f0%9d%90%ae-%f0%9d%90%a9%f0%9d%90%9a%f0%9d%90%a7%f0%9d%90%a2/",
     "https://www.agriculture.bf/2025/09/11/%f0%9d%90%8f%f0%9d%90%9a%f0%9d%90%a7%f0%9d%90%a2%f0%9d%90%9e%f0%9d%90%ab-%f0%9d%90%9d%f0%9d%90%9e-%f0%9d%90%91%f0%9d%90%9e%f0%9d%90%ac%f0%9d%90%a2%f0%9d%90%a5%f0%9d%90%a2%f0%9d%90%9e%f0%9d%90%a7/",
     "https://www.agriculture.bf/2025/09/08/%f0%9d%90%82%f0%9d%90%a8%f0%9d%90%a8%f0%9d%90%a9%f0%9d%90%9e%f0%9d%90%ab%f0%9d%90%9a%f0%9d%90%ad%f0%9d%90%a2%f0%9d%90%a8%f0%9d%90%a7-%f0%9d%90%ab%f0%9d%90%ae%f0%9d%90%ac%f0%9d%90%ac%f0%9d%90%a8/"
 ]
 DATA_DIR = "../data"
-os.makedirs(DATA_DIR, exist_ok=True)  # Crée le dossier data/ s'il n'existe pas
+os.makedirs(DATA_DIR, exist_ok=True)
 
 corpus_data = []
 source_list = []

@@ -1,2 +1,4 @@
 .env
 .idea
+src/chroma_db/
+src/pdfs_telecharges/**
