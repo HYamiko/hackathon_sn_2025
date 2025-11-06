@@ -1,11 +1,9 @@
 #  RAG AVEC MISTRAL HACKATHON SEMAINE DU NUMERIQUE
 
 
-<video width="600" controls>
-  <source src="video_presentation.mkv" type="video/mkv">
-  Votre navigateur ne supporte pas la balise vidéo.
-</video>
 
+
+[Video de presentation](https://www.youtube.com/watch?v=TpCsrKS_Bdw)
 ## 🧠 Introduction
 
 Ce projet implémente un **système RAG (Retrieval-Augmented Generation)** :
