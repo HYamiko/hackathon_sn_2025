@@ -14,8 +14,11 @@ from ragas.metrics import (
     context_precision,
     context_recall,
 )
+from dotenv import load_dotenv
+# Charger les variables d'environnement du fichier .env
+load_dotenv()
 
-MISTRAL_API_KEY = "StthE16bt5IReMHPxgjbwtQLGggjOGtq"
+MISTRAL_API_KEY = os.getenv("MISTRAL_API_KEY")
 # Appliquer nest_asyncio
 nest_asyncio.apply()
 
