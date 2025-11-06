@@ -15,8 +15,7 @@ cd <nom-du-repo>
 2. **Créer un environnement virtuel**
 
 ```bash
-# Aller dans src
-cd src
+
 # Création de l'environnement virtuel
 python -m venv venv
 
@@ -30,12 +29,12 @@ source venv/bin/activate
 3. **Installer les dépendances**
 
 ```bash
-pip install -r ../requirements.txt
+pip install -r requirements.txt
 ```
 
 4. **Configurer la clé API**
 
-Créez un fichier `.env` à la racine du projet avec le contenu suivant :
+Créez un fichier `.env` dans le dossier `src` du projet avec le contenu suivant :
 
 ```
 MISTRAL_API_KEY=votre_clé_api_mistral
