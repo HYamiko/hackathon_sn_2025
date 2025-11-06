@@ -1,6 +1,85 @@
-# Assistant RAG avec Mistral
+#  RAG AVEC MISTRAL HACKATHON SEMAINE DU NUMERIQUE
 
-Ce projet implémente un assistant virtuel basé sur le modèle Mistral, utilisant la technique de Retrieval-Augmented Generation (RAG) pour fournir des réponses précises et contextuelles à partir d'une base de connaissances personnalisée.
+
+## 🧠 Introduction
+
+Ce projet implémente un **système RAG (Retrieval-Augmented Generation)** :
+il combine des **modèles de langage (LLMs)** avec un **index vectoriel** pour permettre une recherche intelligente dans un corpus local de documents.
+
+Il repose principalement sur :
+
+* **MistralAI** comme moteur de génération,
+* **LangChain** pour la logique d’orchestration,
+* **FAISS** ou équivalent pour l’index vectoriel,
+* des outils Python classiques pour la donnée et le traitement.
+
+## 🌍 Contexte scientifique et socio-économique
+
+L’agriculture est le **pilier économique du Burkina Faso**.
+Selon les données de la **Banque mondiale** et de l’**INSD**, elle :
+
+* contribue à **plus de 30 % du PIB national** ;
+* emploie **plus de 70 % de la population active** ;
+* constitue la **principale source de revenus et de sécurité alimentaire**.
+
+Malgré cela, le secteur reste fortement exposé à :
+
+* la **variabilité climatique** (sécheresses, irrégularité des pluies) ;
+* la **dégradation des sols** ;
+* la **faible accessibilité à l’information agronomique** (techniques de culture, maladies des plantes, gestion de l’eau, etc.) ;
+* et la **faible diffusion de la recherche scientifique** auprès des producteurs.
+
+---
+
+## 🧩 Problématique scientifique
+
+Les agriculteurs et techniciens agricoles du Burkina Faso disposent souvent de **données dispersées et non structurées** :
+
+* rapports techniques (INERA, CNRST, FAO, etc.),
+* publications scientifiques,
+* guides de bonnes pratiques,
+* bulletins climatiques,
+* documents PDF non indexés ou difficilement exploitables.
+
+👉 Le défi est donc **de valoriser ce savoir existant** pour en faire **un outil d’aide à la décision**.
+
+---
+
+## 🧠 Justification du choix de l’agriculture pour un RAG
+
+Le **RAG (Retrieval-Augmented Generation)** permet d’exploiter de grandes quantités d’informations **non structurées** (textes, rapports, documents PDF) afin de :
+
+* extraire automatiquement les **informations pertinentes** ;
+* générer des **réponses contextuelles et fiables** à des questions précises ;
+* et éviter les **hallucinations des modèles de langage** en s’appuyant sur une **base documentaire vérifiée**.
+
+Appliqué à l’agriculture, cela ouvre la voie à une **IA de vulgarisation scientifique**, capable de répondre à des questions comme :
+
+* « Quelle variété de maïs est la plus adaptée à la région du Centre-Ouest ? »
+* « Comment traiter la striga ou la rouille du mil ? »
+* « Quelles pratiques de conservation des sols limitent la sécheresse ? »
+
+Scientifiquement, ce choix se justifie car :
+
+* L’agriculture est un **système complexe**, multidimensionnel (climat, biologie, économie, sol, eau).
+  → Le RAG aide à **intégrer et interconnecter** ces dimensions.
+* Les documents agricoles sont souvent **non structurés et volumineux**,
+  → Le RAG est **optimal** pour extraire et synthétiser ce type d’information.
+* Il contribue à **la science ouverte et à la diffusion des connaissances** locales et internationales.
+
+---
+
+## 💻 Pertinence technologique du RAG pour l’agriculture
+
+| Enjeu                              | Apport du RAG                                                                                                               |
+| ---------------------------------- | --------------------------------------------------------------------------------------------------------------------------- |
+| 🌾 **Vulgarisation agricole**      | Un assistant qui répond aux questions des agriculteurs en langue simple, basé sur des données locales (INERA, FAO, CIRAD…). |
+| ☀️ **Changement climatique**       | Accès rapide aux recherches et recommandations sur la résilience, l’adaptation et la gestion de l’eau.                      |
+| 🧬 **Maladies et ravageurs**       | Consultation automatisée des guides phytosanitaires et fiches techniques.                                                   |
+| 📈 **Optimisation des rendements** | Synthèse de données agronomiques, historiques pluviométriques, et pratiques culturales.                                     |
+| 🔗 **Transfert de connaissances**  | Mise à disposition du savoir scientifique des chercheurs vers les acteurs de terrain.                                       |
+
+---
 
 
 ## Installation
@@ -82,6 +161,41 @@ Voici la **documentation détaillée** des librairies employées dans votre scri
 ---
 
 ## 🧩 **Bibliothèques externes utilisées**
+
+## 🧠 **1. LangChain**
+
+📦 **Installation :**
+
+```bash
+pip install langchain
+```
+
+📚 **Documentation :**
+[https://python.langchain.com](https://python.langchain.com)
+
+---
+
+### 📝 **Rôle général**
+
+LangChain est une **bibliothèque de haut niveau pour orchestrer des modèles de langage (LLMs)**.
+Elle permet de **chaîner** des étapes logiques : prompts, récupération de contexte, appels à un modèle, post-traitement, stockage, etc.
+
+C’est la **colonne vertébrale typique d’un projet RAG (Retrieval-Augmented Generation)**.
+
+---
+
+### ⚙️ **Fonctionnalités principales**
+
+| Domaine                           | Description                                           | Exemple typique               |
+| --------------------------------- | ----------------------------------------------------- | ----------------------------- |
+| 🧩 **Chains**                     | Enchaînement d’actions (prompt → LLM → sortie).       | `LLMChain`, `SequentialChain` |
+| 💬 **Chat Models**                | Interfaces unifiées pour GPT, Mistral, Claude, etc.   | `ChatOpenAI`, `ChatMistralAI` |
+| 📚 **Retrievers / Vector Stores** | Recherche sémantique de documents.                    | `FAISS`, `Chroma`, `Pinecone` |
+| 🧠 **Memory**                     | Historique des conversations (chat contextuel).       | `ConversationBufferMemory`    |
+| 🔗 **Agents**                     | Systèmes autonomes capables de choisir leurs actions. | `initialize_agent()`          |
+| 🧰 **Tools**                      | Intégration d’outils externes (API, fichiers, code).  | `PythonREPLTool`, `SerpAPI`   |
+
+---
 
 ### 1. **streamlit**
 
@@ -276,5 +390,3 @@ from utils.query_classifier import QueryClassifier
 | 🔍 RAG / recherche  | `utils.vector_store`     | interne  | Recherche vectorielle               |
 | 🗃️ Base de données | `utils.database`         | interne  | Gestion des interactions / feedback |
 | 🧠 Classification   | `utils.query_classifier` | interne  | Détection du mode de réponse        |
-
----
